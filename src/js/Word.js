@@ -30,7 +30,7 @@ export default class Word {
     cardBack.append(cardBackImg, cardBackText);
     const card = document.createElement('div');
     card.classList.add('card');
-    card.setAttribute('id', `card_${this.word}`);
+    card.setAttribute('id', `${this.word}`);
     const inner = document.createElement('div');
     inner.classList.add('inner');
     inner.append(cardFront, cardBack);

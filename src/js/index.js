@@ -1,13 +1,16 @@
 import allWords from './allWords.js';
 
 const categoryList = Object.keys(allWords);
+const mainMenu = document.querySelector('#mainMenu');
+const main = document.querySelector('main');
 
 const createMainMenu = () => {
   const ul = document.createElement('ul');
 
   const firstItem = document.createElement('li');
-  firstItem.classList.add('menuItem', 'main');
+  firstItem.classList.add('item', 'main');
   firstItem.textContent = 'main page';
+  ul.append(firstItem);
 
   for (let i = 0; i < categoryList.length; i += 1) {
     const categoryTitle = categoryList[i];
@@ -18,8 +21,9 @@ const createMainMenu = () => {
   }
 
   const lastItem = document.createElement('li');
-  lastItem.classList.add('menuItem', 'stats');
+  lastItem.classList.add('item', 'stats');
   lastItem.textContent = 'stats';
+  ul.append(lastItem);
 
   return ul;
 };
@@ -35,6 +39,7 @@ const createMainPage = () => {
     cardImage.src = `./assets/images/${randomWord}.png`;
     cardImage.alt = `${category}`;
     const cardTitle = document.createElement('p');
+    cardTitle.className = 'cardTitle';
     cardTitle.textContent = category;
     const card = document.createElement('div');
     card.classList.add('card', `${category.replace(/\s+/g, '-')}`);
@@ -48,6 +53,44 @@ const createMainPage = () => {
   return mainPageCards;
 };
 
+const changePage = (target) => {
+  if (target === 'main page') {
+    main.firstElementChild.remove();
+    main.append(createMainPage());
+  } else if (target === 'stats') {
+    main.firstElementChild.remove();
+    main.append(createStatsPage());
+  } else {
+    main.firstElementChild.remove();
+    main.append(allWords[target].createHtml());
+  }
+};
+
+const mainClick = (event) => {
+  const etcl = event.target.classList;
+  if (main.firstElementChild.classList.contains('mainPage')) {
+    if (etcl.contains('card')) {
+      const target = event.target.querySelector('.cardTitle').textContent;
+      changePage(target);
+    }
+    if (etcl.contains('cardImage')) {
+      const target = event.target.nextSibling.textContent;
+      changePage(target);
+    }
+    if (etcl.contains('cardTitle')) {
+      const target = event.target.textContent;
+      changePage(target);
+    }
+  }
+};
+
+const mainMenuClick = (event) => {
+  if (event.target.tagName === 'LI') {
+    const target = event.target.textContent;
+    changePage(target);
+  }
+};
+
 const easterEgg = (event) => {
   if (event.code === 'KeyZ') {
     const audio = new Audio('./assets/audio/easterEgg.mp3');
@@ -55,7 +98,9 @@ const easterEgg = (event) => {
   }
 };
 
-document.querySelector('#mainMenu').append(createMainMenu());
-document.querySelector('main').append(createMainPage());
+mainMenu.append(createMainMenu());
+main.append(createMainPage());
 
+main.addEventListener('click', mainClick);
+mainMenu.addEventListener('click', mainMenuClick);
 document.addEventListener('keyup', easterEgg);
