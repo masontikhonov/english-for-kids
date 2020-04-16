@@ -48,5 +48,14 @@ const createMainPage = () => {
   return mainPageCards;
 };
 
+const easterEgg = (event) => {
+  if (event.code === 'KeyZ') {
+    const audio = new Audio('./assets/audio/easterEgg.mp3');
+    audio.play();
+  }
+};
+
 document.querySelector('#mainMenu').append(createMainMenu());
 document.querySelector('main').append(createMainPage());
+
+document.addEventListener('keyup', easterEgg);
