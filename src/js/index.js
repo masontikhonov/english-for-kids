@@ -2,6 +2,7 @@ import allWords from './allWords.js';
 
 const categoryList = Object.keys(allWords);
 const mainMenu = document.querySelector('#mainMenu');
+const mainMenuButton = document.querySelector('#mainMenuButton');
 const main = document.querySelector('main');
 
 const createMainMenu = () => {
@@ -53,6 +54,20 @@ const createMainPage = () => {
   return mainPageCards;
 };
 
+const changeMainMenuState = ({ target }) => {
+  if (target.className === 'waiting') {
+    mainMenu.classList.replace('hidden', 'active');
+    mainMenuButton.classList.replace('waiting', 'active');
+    mainMenuButton.textContent = '[ close ]';
+    return;
+  }
+  if (target.className === 'active') {
+    mainMenu.classList.replace('active', 'hidden');
+    mainMenuButton.classList.replace('active', 'waiting');
+    mainMenuButton.textContent = '[ menu ]';
+  }
+};
+
 const changePage = (target) => {
   if (target === 'main page') {
     main.firstElementChild.remove();
@@ -102,5 +117,6 @@ mainMenu.append(createMainMenu());
 main.append(createMainPage());
 
 main.addEventListener('click', mainClick);
+mainMenuButton.addEventListener('click', changeMainMenuState);
 mainMenu.addEventListener('click', mainMenuClick);
 document.addEventListener('keyup', easterEgg);
