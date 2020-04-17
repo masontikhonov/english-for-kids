@@ -13,6 +13,9 @@ export default class Category {
 
   createHtml() {
     const categoryHtml = document.createElement('div');
+    const title = document.createElement('h2');
+    title.textContent = this.title;
+    categoryHtml.append(title);
     const cards = Object.keys(this.cards);
     for (let i = 0; i < cards.length; i += 1) {
       const card = cards[i];
