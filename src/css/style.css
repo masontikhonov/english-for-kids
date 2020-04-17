@@ -5,6 +5,24 @@ body {
   font-family: 'PT Serif', serif;
 }
 
+input#modeSwitcher {
+  display: none;
+}
+
+label.modeSwitcher {
+  position: absolute;
+  top: 24px;
+  right: 50px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.6s ease-out;
+}
+
+label.modeSwitcher.train span.play {
+  opacity: 0.2;
+}
+
 button#mainMenuButton, button#mainMenuButton:focus {
   border: none;
   background: none;
@@ -17,11 +35,11 @@ button#mainMenuButton {
   top: 24px;
   left: 50px;
   z-index: 20;
-  text-align: center;
+  font-family: 'PT Serif', serif;
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.6s;
+  transition: all 0.6s ease-out;
 }
 
 button#mainMenuButton:hover {
@@ -31,13 +49,14 @@ button#mainMenuButton:hover {
 
 nav#mainMenu {
   position: absolute;
+  top: 0px;
   width: 70%;
   max-width: 300px;
   height: 100%;
   background-color: white;
   border-right: 3px solid black;
   z-index: 10;
-  padding: 70px 20px 30px 50px;
+  padding: 0px 20px 0px 50px;
 }
 
 nav#mainMenu.hidden {
@@ -48,6 +67,10 @@ nav#mainMenu.hidden {
 nav#mainMenu.active {
   transform: translateX(0px);
   transition: transform 0.6s;
+}
+
+nav#mainMenu ul:first-child {
+  margin-top: 70px;
 }
 
 nav#mainMenu li {
@@ -74,7 +97,7 @@ nav#mainMenu li.active {
 main {
   width: 100%;
   margin: 20px 0px;
-  transform: all 0.5s;
+  transition: all 0.6s;
 }
 
 .category, .mainPage {

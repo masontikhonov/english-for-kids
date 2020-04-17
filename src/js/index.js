@@ -9,7 +9,7 @@ const createMainMenu = () => {
   const ul = document.createElement('ul');
 
   const firstItem = document.createElement('li');
-  firstItem.classList.add('item', 'main');
+  firstItem.classList.add('item', 'main', 'active');
   firstItem.textContent = 'main page';
   ul.append(firstItem);
 
@@ -68,16 +68,16 @@ const changeMainMenuState = ({ target }) => {
   }
 };
 
-const changePage = (target) => {
-  if (target === 'main page') {
+const changePage = (targetPage) => {
+  if (targetPage === 'main page') {
     main.firstElementChild.remove();
     main.append(createMainPage());
-  } else if (target === 'stats') {
+  } else if (targetPage === 'stats') {
     main.firstElementChild.remove();
     main.append(createStatsPage());
   } else {
     main.firstElementChild.remove();
-    main.append(allWords[target].createHtml());
+    main.append(allWords[targetPage].createHtml());
   }
 };
 
@@ -99,10 +99,19 @@ const mainClick = (event) => {
   }
 };
 
-const mainMenuClick = (event) => {
-  if (event.target.tagName === 'LI') {
-    const target = event.target.textContent;
-    changePage(target);
+const mainMenuClick = ({ target }) => {
+  if (target.tagName === 'LI') {
+    const targetPage = target.textContent;
+    const items = target.parentNode.querySelectorAll('li');
+    for (let i = 0; i < [...items].length; i += 1) {
+      const item = [...items][i];
+      item.classList.remove('active');
+    }
+    target.classList.add('active');
+    changePage(targetPage);
+    mainMenu.classList.replace('active', 'hidden');
+    mainMenuButton.classList.replace('active', 'waiting');
+    mainMenuButton.textContent = '[ menu ]';
   }
 };
 
