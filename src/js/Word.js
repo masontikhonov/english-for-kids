@@ -3,7 +3,7 @@ export default class Word {
     this.word = word;
     this.translation = translation;
     this.imgSrc = `./assets/images/${word}.png`;
-    this.audioSrc = `./assets/audio/${word}.mp3`;
+    this.audio = new Audio(`./assets/audio/${word}.mp3`);
     this.trainClickCounter = 0;
     this.playSuccessCounter = 0;
     this.playFailCounter = 0;
@@ -16,18 +16,21 @@ export default class Word {
     cardFrontImg.src = `${this.imgSrc}`;
     cardFrontImg.alt = `${this.word}`;
     const cardBackImg = cardFrontImg.cloneNode();
-    const cardAudio = new Audio(`${this.audioSrc}`);
-    cardAudio.classList.add('audio');
+    const flipOn = new Image();
+    flipOn.src = './assets/images/circle-arrows.png';
+    const flipOut = flipOn.cloneNode();
+    flipOn.className = 'flipOn';
+    flipOut.className = 'flipOut';
     const cardFrontText = document.createElement('p');
     cardFrontText.textContent = this.word;
     const cardBackText = document.createElement('p');
     cardBackText.textContent = this.translation;
     const cardFront = document.createElement('div');
     cardFront.classList.add('front');
-    cardFront.append(cardFrontImg, cardFrontText, cardAudio);
+    cardFront.append(cardFrontImg, cardFrontText, flipOn);
     const cardBack = document.createElement('div');
     cardBack.classList.add('back');
-    cardBack.append(cardBackImg, cardBackText);
+    cardBack.append(cardBackImg, cardBackText, flipOut);
     const card = document.createElement('div');
     card.classList.add('card');
     card.setAttribute('id', `${this.word}`);
@@ -35,6 +38,9 @@ export default class Word {
     inner.classList.add('inner');
     inner.append(cardFront, cardBack);
     card.append(inner);
+
+    card.onclick = this.cardClick;
+    card.onmouseleave = this.cardMouseLeave;
     return card;
   }
 
@@ -62,5 +68,24 @@ export default class Word {
     this.playSuccessCounter = 0;
     this.playSuccessCounter = 0;
     this.failPercentage = 0;
+  }
+
+  cardClick = ({ target }) => {
+    const gameMode = document.querySelector("#modeSwitcher").checked;
+    const card = target.closest('.card');
+    if (!gameMode && target.className !== 'flipOn' && target.className !== 'flipOut') {
+      this.audio.play();
+      this.increaseTrainClickCounter();
+    }
+    if (!gameMode && target.className === 'flipOn') {
+      card.classList.add('flipped')
+    }
+    if (!gameMode && target.className === 'flipOut') {
+      card.classList.remove('flipped')
+    }
+  }
+
+  cardMouseLeave({ target}) {
+    target.classList.remove('flipped');
   }
 }

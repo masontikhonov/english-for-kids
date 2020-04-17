@@ -43,6 +43,6 @@ main {
   transform: rotateY(180deg);
 }
 
-.card:hover .inner {
+.card.flipped .inner {
   transform: rotateY(180deg);
 }
