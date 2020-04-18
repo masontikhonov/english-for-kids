@@ -8,6 +8,23 @@ export default class Word {
     this.playSuccessCounter = 0;
     this.playFailCounter = 0;
     this.failPercentage = 0;
+    this.cardClick = ({ target }) => {
+      const gameMode = document.querySelector('#modeSwitcher').checked;
+      const card = target.closest('.card');
+      if (!gameMode && target.className !== 'flipOn' && target.className !== 'flipOut') {
+        this.audio.play();
+        this.increaseTrainClickCounter();
+      }
+      if (!gameMode && target.className === 'flipOn') {
+        card.classList.add('flipped');
+      }
+      if (!gameMode && target.className === 'flipOut') {
+        card.classList.remove('flipped');
+      }
+    };
+    this.cardMouseLeave = ({ target }) => {
+      target.classList.remove('flipped');
+    };
   }
 
   createHtml() {
@@ -69,24 +86,5 @@ export default class Word {
     this.playSuccessCounter = 0;
     this.playSuccessCounter = 0;
     this.failPercentage = 0;
-  }
-
-  cardClick = ({ target }) => {
-    const gameMode = document.querySelector("#modeSwitcher").checked;
-    const card = target.closest('.card');
-    if (!gameMode && target.className !== 'flipOn' && target.className !== 'flipOut') {
-      this.audio.play();
-      this.increaseTrainClickCounter();
-    }
-    if (!gameMode && target.className === 'flipOn') {
-      card.classList.add('flipped')
-    }
-    if (!gameMode && target.className === 'flipOut') {
-      card.classList.remove('flipped')
-    }
-  }
-
-  cardMouseLeave({ target}) {
-    target.classList.remove('flipped');
   }
 }
