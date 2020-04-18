@@ -3,7 +3,44 @@ import allWords from './allWords.js';
 const categoryList = Object.keys(allWords);
 const mainMenu = document.querySelector('#mainMenu');
 const mainMenuButton = document.querySelector('#mainMenuButton');
+const modeSwitcher = document.querySelector('label.modeSwitcher');
 const main = document.querySelector('main');
+
+const changeModeSwitcher = () => {
+  const start = modeSwitcher.querySelector('.start');
+  const startWidth = start.offsetWidth;
+  const play = modeSwitcher.querySelector('.play');
+  const playWidth = play.offsetWidth;
+  const train = modeSwitcher.querySelector('.train');
+  const trainWidth = train.offsetWidth;
+  const end = modeSwitcher.querySelector('.end');
+  const endWidth = end.offsetWidth;
+  let modeSwitcherWidth;
+  if (modeSwitcher.classList.contains('train')) {
+    modeSwitcherWidth = startWidth + playWidth + endWidth;
+    modeSwitcher.style.width = `${modeSwitcherWidth}px`;
+    play.style.transform = `translate3d(${startWidth}px, 0, 0)`;
+    train.style.transform = `translate3d(${modeSwitcherWidth}px, 0, 0)`;
+  }
+  if (modeSwitcher.classList.contains('play')) {
+    modeSwitcherWidth = startWidth + trainWidth + endWidth;
+    modeSwitcher.style.width = `${modeSwitcherWidth}px`;
+    play.style.transform = `translate3d(-${modeSwitcherWidth}px, 0, 0)`;
+    train.style.transform = `translate3d(${startWidth}px, 0, 0)`;
+  }
+};
+
+const switchMode = () => {
+  if (modeSwitcher.classList.contains('train')) {
+    modeSwitcher.classList.replace('train', 'play');
+    changeModeSwitcher();
+    return;
+  }
+  if (modeSwitcher.classList.contains('play')) {
+    modeSwitcher.classList.replace('play', 'train');
+    changeModeSwitcher();
+  }
+};
 
 const createMainMenu = () => {
   const ul = document.createElement('ul');
@@ -122,10 +159,12 @@ const easterEgg = (event) => {
   }
 };
 
+changeModeSwitcher();
 mainMenu.append(createMainMenu());
 main.append(createMainPage());
 
 main.addEventListener('click', mainClick);
 mainMenuButton.addEventListener('click', changeMainMenuState);
 mainMenu.addEventListener('click', mainMenuClick);
+modeSwitcher.addEventListener('click', switchMode);
 document.addEventListener('keyup', easterEgg);

@@ -3,6 +3,7 @@
 
 body {
   font-family: 'PT Serif', serif;
+  font-size: 0px;
 }
 
 input#modeSwitcher {
@@ -13,14 +14,29 @@ label.modeSwitcher {
   position: absolute;
   top: 24px;
   right: 50px;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
   font-size: 24px;
+  line-height: 24px;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.6s ease-out;
+  transition: transform 0.6s;
 }
 
-label.modeSwitcher.train span.play {
-  opacity: 0.2;
+label.modeSwitcher span {
+  white-space: pre;
+}
+
+label.modeSwitcher span.play {
+  position: absolute;
+  transition: transform 0.6s;
+}
+
+label.modeSwitcher span.train {
+  position: absolute;
+  transition: transform 0.6s;
 }
 
 button#mainMenuButton, button#mainMenuButton:focus {
@@ -34,9 +50,11 @@ button#mainMenuButton {
   position: absolute;
   top: 24px;
   left: 50px;
+  height: 24px;
   z-index: 20;
   font-family: 'PT Serif', serif;
   font-size: 24px;
+  line-height: 24px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.6s ease-out;
@@ -115,7 +133,22 @@ main {
   text-align: center;
 }
 
-.card {
+.mainPage .card {
+  width: 160px;
+  height: 200px;
+  margin: 10px 10px;
+  padding: 20px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+}
+
+.mainPage .card:hover {
+  box-shadow: 3px 3px 5px gray;
+  transition: all 0.1s;
+}
+
+.category .card {
   width: 200px;
   height: 240px;
   margin: 10px 10px;
@@ -124,55 +157,66 @@ main {
 
 .card:hover {
   cursor: pointer;
+  transition: all 0.1s;
+}
+
+.category .card:hover .front, .card:hover .back {
   box-shadow: 3px 3px 5px gray;
   transition: all 0.1s;
 }
 
-.card > .inner {
+.category .card > .inner {
   position: relative;
-  width: 160px;
-  height: 200px;
-  padding: 20px 20px;
+  width: 200px;
+  height: 240px;
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
 }
 
-.card .front, .card .back {
+.category .card .front, .category .card .back {
   position: absolute;
   width: 160px;
   height: 200px;
+  padding: 20px 20px;
   backface-visibility: hidden;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
 }
 
-.card .back {
+.category .card .back {
   transform: rotateY(180deg);
 }
 
-.card.flipped .inner {
+.category .card.flipped .inner {
   transform: rotateY(180deg);
 }
 
 .card p {
-  line-height: 24px;
+  line-height: 20px;
   text-align: center;
   font-size: 24px;
 }
 
-.card .flipOn, .card .flipOut {
+.category .card .flipOn, .category .card .flipOut {
   position: absolute;
-  bottom: -10px;
-  right: -10px;
+  bottom: 5px;
+  right: 5px;
   padding: 5px 5px;
   width: 20px;
   height: 20px;
+  font-size: 20px;
+  line-height: 20px;
   opacity: 0.2;
 }
 
-.card .flipOn:hover, .card .flipOut:hover {
+.category .card .flipOn:hover, .category .card .flipOut:hover {
   padding: 0px 0px;
   width: 30px;
   height: 30px;
+  font-size: 30px;
+  line-height: 30px;
   opacity: 1;
   transition: all 0.1s;
 }
