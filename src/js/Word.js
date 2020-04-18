@@ -16,11 +16,12 @@ export default class Word {
     cardFrontImg.src = `${this.imgSrc}`;
     cardFrontImg.alt = `${this.word}`;
     const cardBackImg = cardFrontImg.cloneNode();
-    const flipOn = new Image();
-    flipOn.src = './assets/images/circle-arrows.png';
+    const flipOn = document.createElement('span');
     const flipOut = flipOn.cloneNode();
     flipOn.className = 'flipOn';
+    flipOn.textContent = '\u21bb';
     flipOut.className = 'flipOut';
+    flipOut.textContent = '\u21ba';
     const cardFrontText = document.createElement('p');
     cardFrontText.textContent = this.word;
     const cardBackText = document.createElement('p');
