@@ -22,20 +22,21 @@ export default class Category {
       main.firstElementChild.remove();
       const gameResult = document.createElement('div');
       gameResult.className = 'gameResult';
-      const resultText = document.createElement('h2');
+      const resultText = document.createElement('h1');
       const resultImage = new Image();
       const resultAudio = new Audio();
       if (errorCounter === 0) {
-        resultAudio.src = './assets/audio/failure.mp3';
+        resultAudio.src = './assets/audio/success.mp3';
         resultImage.src = './assets/images/party.png';
         resultText.textContent = 'Congratulations!';
       } else {
-        resultAudio.src = './assets/audio/success.mp3';
+        resultAudio.src = './assets/audio/failure.mp3';
         resultImage.src = './assets/images/fire.png';
         resultText.textContent = `Unfortunately, you have ${errorCounter} errors.`;
       }
       gameResult.append(resultText, resultImage);
       main.append(gameResult);
+      resultAudio.play();
       setTimeout(() => {
         location.reload();
       }, 5000);
