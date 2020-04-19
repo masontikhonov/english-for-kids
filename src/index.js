@@ -1,4 +1,4 @@
-import allWords from './allWords.js';
+import allWords from './js/allWords.js';
 
 const categoryList = Object.keys(allWords);
 const mainMenu = document.querySelector('#mainMenu');
