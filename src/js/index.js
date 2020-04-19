@@ -102,6 +102,12 @@ const changeMainMenuState = ({ target }) => {
     mainMenu.classList.replace('active', 'hidden');
     mainMenuButton.classList.replace('active', 'waiting');
     mainMenuButton.textContent = '[ menu ]';
+    return;
+  }
+  if (mainMenu.classList.contains('active') && target.closest('.menu') === null) {
+    mainMenu.classList.replace('active', 'hidden');
+    mainMenuButton.classList.replace('active', 'waiting');
+    mainMenuButton.textContent = '[ menu ]'; 
   }
 };
 
@@ -164,7 +170,7 @@ mainMenu.append(createMainMenu());
 main.append(createMainPage());
 
 main.addEventListener('click', mainClick);
-mainMenuButton.addEventListener('click', changeMainMenuState);
+document.querySelector('body').addEventListener('click', changeMainMenuState);
 mainMenu.addEventListener('click', mainMenuClick);
 modeSwitcher.addEventListener('click', switchMode);
 document.addEventListener('keyup', easterEgg);
