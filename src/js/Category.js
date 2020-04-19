@@ -17,6 +17,29 @@ export default class Category {
         this.startGame();
       }
     };
+    this.finishGame = (errorCounter) => {
+      const main = document.querySelector('main');
+      main.firstElementChild.remove();
+      const gameResult = document.createElement('div');
+      gameResult.className = 'gameResult';
+      const resultText = document.createElement('h2');
+      const resultImage = new Image();
+      const resultAudio = new Audio();
+      if (errorCounter === 0) {
+        resultAudio.src = './assets/audio/failure.mp3';
+        resultImage.src = './assets/images/party.png';
+        resultText.textContent = 'Congratulations!';
+      } else {
+        resultAudio.src = './assets/audio/success.mp3';
+        resultImage.src = './assets/images/fire.png';
+        resultText.textContent = `Unfortunately, you have ${errorCounter} errors.`;
+      }
+      gameResult.append(resultText, resultImage);
+      main.append(gameResult);
+      setTimeout(() => {
+        location.reload();
+      }, 5000);
+    };
     this.startGame = () => {
       const wordsToPlay = words;
       let errorCounter = 0;
@@ -29,7 +52,7 @@ export default class Category {
           this.cards[currentWord].audio.play();
           return;
         }
-        finishGame();
+        this.finishGame(errorCounter);
       };
       const correctAudio = new Audio();
       correctAudio.src = './assets/audio/correct.mp3';

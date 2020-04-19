@@ -109,7 +109,7 @@ const changeMainMenuState = ({ target }) => {
   if (mainMenu.classList.contains('active') && target.closest('.menu') === null) {
     mainMenu.classList.replace('active', 'hidden');
     mainMenuButton.classList.replace('active', 'waiting');
-    mainMenuButton.textContent = '[ menu ]'; 
+    mainMenuButton.textContent = '[ menu ]';
   }
 };
 
