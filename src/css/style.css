@@ -122,7 +122,7 @@ main {
   transition: all 0.6s;
 }
 
-.category, .mainPage {
+.category, .mainPage, .statsPage {
   max-width: 666px;
   margin: 90px auto;
   display: flex;
@@ -130,7 +130,7 @@ main {
   justify-content: center;
 }
 
-.category h2 {
+.category h1 {
   width: 100%;
   margin: 0px 0px 50px;
   font-size: 48px;
@@ -297,9 +297,47 @@ main {
   align-items: flex-start;
 }
 
-.gameResult h2 {
+.gameResult h1 {
   width: 100%;
   margin: 0px 0px 50px;
   font-size: 36px;
   text-align: center;
+}
+
+.statsPage {
+  padding: 0px 24px;
+}
+
+.statsPage .categoryBlock, .statsPage .categoryBlock h2, .statsPage .categoryBlock .wordLine {
+  width: 100%;
+}
+
+.statsPage h1 {
+  width: 100%;
+  margin: 0px 0px 50px;
+  font-size: 48px;
+  text-align: center;
+}
+
+.statsPage .categoryBlock {
+  margin-bottom: 48px;
+}
+
+.statsPage .categoryBlock h2 {
+  font-size: 32px;
+  margin-bottom: 32px;
+}
+
+.statsPage .categoryBlock .wordLine {
+  display: grid;
+  grid-template-columns: 5fr repeat(4, 1fr);
+  margin-bottom: 6px;
+  padding: 4px 4px;
+  height: auto;
+  font-size: 18px;
+  word-wrap: break-word;
+}
+
+.statsPage .categoryBlock .wordLine:nth-child(2n+3) {
+  background-color: rgb(245, 245, 245);
 }

@@ -99,7 +99,7 @@ export default class Category {
   createHtml() {
     const categoryHtml = document.createElement('div');
 
-    const title = document.createElement('h2');
+    const title = document.createElement('h1');
     title.textContent = this.title;
     categoryHtml.append(title);
 

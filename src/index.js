@@ -93,6 +93,44 @@ const createMainPage = () => {
   return mainPageCards;
 };
 
+const createStatsPage = () => {
+  const statsPage = document.createElement('div');
+  statsPage.className = 'statsPage';
+  const statsPageTitle = document.createElement('h1');
+  statsPageTitle.textContent = 'stats';
+  statsPage.append(statsPageTitle);
+  for (let i = 0; i < categoryList.length; i += 1) {
+    const category = categoryList[i];
+    const categoryBlock = document.createElement('div');
+    categoryBlock.className = 'categoryBlock';
+    const categoryTitle = document.createElement('h2');
+    categoryTitle.textContent = category;
+    categoryBlock.append(categoryTitle);
+    const wordList = Object.keys(allWords[category].cards);
+    for (let s = 0; s < wordList.length; s += 1) {
+      const word = wordList[s];
+      const wordObj = allWords[category].cards[word];
+      const wordLine = document.createElement('div');
+      wordLine.className = 'wordLine';
+      const div = document.createElement('div');
+      const wordTitle = div.cloneNode();
+      wordTitle.textContent = `${wordObj.word} (${wordObj.translation})`;
+      const trainClickCounter = div.cloneNode();
+      trainClickCounter.textContent = wordObj.trainClickCounter;
+      const playSuccessCounter = div.cloneNode();
+      playSuccessCounter.textContent = wordObj.playSuccessCounter;
+      const playFailCounter = div.cloneNode();
+      playFailCounter.textContent = wordObj.playFailCounter;
+      const failPercentage = div.cloneNode();
+      failPercentage.textContent = wordObj.failPercentage;
+      wordLine.append(wordTitle, trainClickCounter, playSuccessCounter, playFailCounter, failPercentage);
+      categoryBlock.append(wordLine);
+    }
+    statsPage.append(categoryBlock);
+  }
+  return statsPage;
+};
+
 const changeMainMenuState = ({ target }) => {
   if (target.className === 'waiting') {
     mainMenu.classList.replace('hidden', 'active');
