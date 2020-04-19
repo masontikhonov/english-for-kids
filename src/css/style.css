@@ -220,3 +220,16 @@ main {
   opacity: 1;
   transition: all 0.1s;
 }
+
+.play .category .card, .play .category .card .inner {
+  height: 200px;
+}
+
+.play .category .card .front {
+  height: 160px;
+}
+
+.play .category .card .front p, .play .category .card .front span, .play .category .card .back {
+  display: none;
+}
+
