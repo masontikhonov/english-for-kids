@@ -25,6 +25,10 @@ label.modeSwitcher {
   transition: transform 0.6s;
 }
 
+label.modeSwitcher:hover {
+  color: blue;
+}
+
 label.modeSwitcher span {
   white-space: pre;
 }
