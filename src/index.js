@@ -1,8 +1,10 @@
 import allWords from './js/allWords.js';
+import Category from './js/Category.js';
 import * as stats from './js/stats.js';
 import * as game from './js/game.js';
 
 const categoryList = Object.keys(allWords);
+let difficultWords;
 const mainMenu = document.querySelector('#mainMenu');
 const mainMenuButton = document.querySelector('#mainMenuButton');
 const modeSwitcher = document.querySelector('label.modeSwitcher');
@@ -122,6 +124,9 @@ const changePage = (targetPage) => {
   } else if (targetPage === 'stats') {
     main.firstElementChild.remove();
     main.append(stats.createStatsPage());
+  } else if (targetPage === 'difficult words') {
+    main.firstElementChild.remove();
+    main.append(difficultWords.createHtml());
   } else {
     main.firstElementChild.remove();
     main.append(allWords[targetPage].createHtml());
@@ -151,6 +156,22 @@ const mainClick = (event) => {
   }
   if (event.target.id === 'gameButton') {
     game.initGame();
+  }
+  if (event.target.id === 'resetButton') {
+    stats.resetCounters();
+    changePage('stats');
+  }
+  if (event.target.id === 'repeatDiffButton') {
+    const sortedStatsArr = stats.sortStats('failPercentage');
+    const wordsToRepeat = {};
+    for (let i = 0; i <= 8; i += 1) {
+      const element = sortedStatsArr[i];
+      if (element.failPercentage === 0) { break; }
+      const word = element.title;
+      wordsToRepeat[word] = word;
+    }
+    difficultWords = new Category('difficult words', wordsToRepeat);
+    changePage('difficult words');
   }
 };
 

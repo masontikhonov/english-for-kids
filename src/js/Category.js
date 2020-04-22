@@ -37,7 +37,7 @@ export default class Category {
       categoryHtml.append(this.cards[card].createHtml());
     }
     categoryHtml.className = 'category';
-    categoryHtml.id = this.title;
+    categoryHtml.id = this.title.replace(/\s+/g, '-');
     return categoryHtml;
   }
 }

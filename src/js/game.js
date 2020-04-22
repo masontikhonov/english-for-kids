@@ -27,7 +27,7 @@ export const finishGame = (errorCounter) => {
 };
 
 const startGame = () => {
-  const category = document.querySelector('.category').id;
+  const category = document.querySelector('.category').id.replace(/-/g, ' ');
   const words = Object.keys(allWords[category].cards);
   const wordsToPlay = words;
   let errorCounter = 0;
