@@ -4,16 +4,11 @@ export default class Word {
     this.translation = translation;
     this.imgSrc = `./assets/images/${word}.png`;
     this.audio = new Audio(`./assets/audio/${word}.mp3`);
-    this.trainClickCounter = 0;
-    this.playSuccessCounter = 0;
-    this.playFailCounter = 0;
-    this.failPercentage = 0;
     this.cardClick = ({ target }) => {
       const gameMode = document.querySelector('#modeSwitcher').checked;
       const card = target.closest('.card');
       if (!gameMode && target.className !== 'flipOn' && target.className !== 'flipOut') {
         this.audio.play();
-        this.increaseTrainClickCounter();
       }
       if (!gameMode && target.className === 'flipOn') {
         card.classList.add('flipped');
@@ -60,31 +55,5 @@ export default class Word {
     card.onclick = this.cardClick;
     card.onmouseleave = this.cardMouseLeave;
     return card;
-  }
-
-  calcFailPercentage() {
-    const totalPlayClicks = this.playSuccessCounter + this.playFailCounter;
-    this.failPercentage = (this.playFailCounter * 100) / totalPlayClicks;
-  }
-
-  increaseTrainClickCounter() {
-    this.trainClickCounter += 1;
-  }
-
-  increasePlaySuccessCounter() {
-    this.playSuccessCounter += 1;
-    this.calcFailPercentage();
-  }
-
-  increasePlayFailCounter() {
-    this.playFailCounter += 1;
-    this.calcFailPercentage();
-  }
-
-  resetCounters() {
-    this.trainClickCounter = 0;
-    this.playSuccessCounter = 0;
-    this.playSuccessCounter = 0;
-    this.failPercentage = 0;
   }
 }

@@ -310,7 +310,7 @@ main {
   padding: 0px 24px;
 }
 
-.statsPage .categoryBlock, .statsPage .categoryBlock h2, .statsPage .categoryBlock .wordLine {
+.statsPage .statsPageHeader, .statsPage .categoryBlock, .statsPage .categoryBlock h2, .statsPage .categoryBlock .wordLine {
   width: 100%;
 }
 
@@ -319,6 +319,40 @@ main {
   margin: 0px 0px 50px;
   font-size: 48px;
   text-align: center;
+}
+
+.statsPage button#resetButton, .statsPage button#resetButton:focus,
+.statsPage button#repeatDiffButton, .statsPage button#repeatDiffButton:focus {
+  margin: 0 auto;
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0px;
+}
+
+.statsPage button#resetButton,
+.statsPage button#repeatDiffButton {
+  margin: 12px 12px;
+  font-family: 'PT Serif', serif;
+  font-size: 22px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: all 0.6s ease-out;
+}
+
+.statsPage button#resetButton:hover,
+.statsPage button#repeatDiffButton:hover {
+  font-style: italic;
+  color: blue;
+}
+
+.statsPage .statsPageHeader {
+  padding: 4px 4px;
+  display: grid;
+  grid-template-columns: 5fr repeat(4, 1fr);
+  column-gap: 6px;
+  font-size: 10px;
+  word-wrap: break-word;
 }
 
 .statsPage .categoryBlock {
@@ -333,6 +367,7 @@ main {
 .statsPage .categoryBlock .wordLine {
   display: grid;
   grid-template-columns: 5fr repeat(4, 1fr);
+  column-gap: 6px;
   margin-bottom: 6px;
   padding: 4px 4px;
   height: auto;
