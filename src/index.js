@@ -1,4 +1,6 @@
 import allWords from './js/allWords.js';
+import * as stats from './js/stats.js';
+import * as game from './js/game.js';
 
 const categoryList = Object.keys(allWords);
 const mainMenu = document.querySelector('#mainMenu');
@@ -93,44 +95,6 @@ const createMainPage = () => {
   return mainPageCards;
 };
 
-const createStatsPage = () => {
-  const statsPage = document.createElement('div');
-  statsPage.className = 'statsPage';
-  const statsPageTitle = document.createElement('h1');
-  statsPageTitle.textContent = 'stats';
-  statsPage.append(statsPageTitle);
-  for (let i = 0; i < categoryList.length; i += 1) {
-    const category = categoryList[i];
-    const categoryBlock = document.createElement('div');
-    categoryBlock.className = 'categoryBlock';
-    const categoryTitle = document.createElement('h2');
-    categoryTitle.textContent = category;
-    categoryBlock.append(categoryTitle);
-    const wordList = Object.keys(allWords[category].cards);
-    for (let s = 0; s < wordList.length; s += 1) {
-      const word = wordList[s];
-      const wordObj = allWords[category].cards[word];
-      const wordLine = document.createElement('div');
-      wordLine.className = 'wordLine';
-      const div = document.createElement('div');
-      const wordTitle = div.cloneNode();
-      wordTitle.textContent = `${wordObj.word} (${wordObj.translation})`;
-      const trainClickCounter = div.cloneNode();
-      trainClickCounter.textContent = wordObj.trainClickCounter;
-      const playSuccessCounter = div.cloneNode();
-      playSuccessCounter.textContent = wordObj.playSuccessCounter;
-      const playFailCounter = div.cloneNode();
-      playFailCounter.textContent = wordObj.playFailCounter;
-      const failPercentage = div.cloneNode();
-      failPercentage.textContent = wordObj.failPercentage;
-      wordLine.append(wordTitle, trainClickCounter, playSuccessCounter, playFailCounter, failPercentage);
-      categoryBlock.append(wordLine);
-    }
-    statsPage.append(categoryBlock);
-  }
-  return statsPage;
-};
-
 const changeMainMenuState = ({ target }) => {
   if (target.className === 'waiting') {
     mainMenu.classList.replace('hidden', 'active');
@@ -157,7 +121,7 @@ const changePage = (targetPage) => {
     main.append(createMainPage());
   } else if (targetPage === 'stats') {
     main.firstElementChild.remove();
-    main.append(createStatsPage());
+    main.append(stats.createStatsPage());
   } else {
     main.firstElementChild.remove();
     main.append(allWords[targetPage].createHtml());
@@ -179,6 +143,14 @@ const mainClick = (event) => {
       const target = event.target.textContent;
       changePage(target);
     }
+  }
+  const gameMode = document.querySelector('#modeSwitcher').checked;
+  if (event.target.closest('.category') !== null && !gameMode && event.target.className !== 'flipOn' && event.target.className !== 'flipOut') {
+    const word = event.target.closest('.card').id;
+    stats.increaseTrainClickCounter(word);
+  }
+  if (event.target.id === 'gameButton') {
+    game.initGame();
   }
 };
 
