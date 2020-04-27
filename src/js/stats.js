@@ -33,7 +33,7 @@ export const stats = loadStats();
 
 export const increaseTrainClickCounter = (word) => {
   stats[word].trainClickCounter += 1;
-  saveStats(Object.values(stats));
+  saveStats(stats);
 };
 
 const calcFailPercentage = (word) => {
