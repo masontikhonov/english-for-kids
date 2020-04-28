@@ -39,7 +39,6 @@ const switchMode = () => {
     modeSwitcher.classList.replace('train', 'play');
     main.classList.replace('train', 'play');
     changeModeSwitcher();
-    return;
   }
   if (modeSwitcher.classList.contains('play')) {
     modeSwitcher.classList.replace('play', 'train');
