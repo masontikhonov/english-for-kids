@@ -1,6 +1,11 @@
 import allWords from './allWords.js';
+import { STATS as CONSTANTS } from '../utils/constants.js';
 
 const categoryList = Object.keys(allWords);
+const div = document.createElement('div');
+const h1 = document.createElement('h1');
+const h2 = document.createElement('h2');
+const button = document.createElement('button');
 
 const saveStats = (stats) => {
   localStorage.setItem('stats', JSON.stringify(stats));
@@ -71,45 +76,37 @@ export const sortStats = (value) => {
   return result;
 };
 
-export const createStatsPage = () => {
-  const statsColumns = [
-    'word (translation)',
-    'training clicks',
-    'correct clicks',
-    'wrong clicks',
-    'error rate',
-  ];
-
-  const div = document.createElement('div');
-  const h1 = document.createElement('h1');
-  const h2 = document.createElement('h2');
-  const button = document.createElement('button');
-
-  const statsPage = div.cloneNode();
-  statsPage.className = 'statsPage';
-
-  const statsPageTitle = h1.cloneNode();
-  statsPageTitle.textContent = 'stats';
-
+const createStatsPageHeader = () => {
   const statsPageHeader = div.cloneNode();
   statsPageHeader.className = 'statsPageHeader';
-  for (let i = 0; i < statsColumns.length; i += 1) {
-    const column = statsColumns[i];
+
+  const buttonsBlock = div.cloneNode();
+  buttonsBlock.className = 'buttonsBlock';
+  const resetButton = button.cloneNode();
+  resetButton.id = 'resetButton';
+  resetButton.textContent = CONSTANTS.RESET_BUTTON;
+  const repeatDiffButton = button.cloneNode();
+  repeatDiffButton.id = 'repeatDiffButton';
+  repeatDiffButton.textContent = CONSTANTS.REPEAT_DIFF_BUTTON;
+  buttonsBlock.append(resetButton, repeatDiffButton);
+  statsPageHeader.append(buttonsBlock);
+  for (let i = 0; i < CONSTANTS.COLUMN_HEADINGS.length; i += 1) {
+    const column = CONSTANTS.COLUMN_HEADINGS[i];
     const columnHeader = div.cloneNode();
     columnHeader.className = 'columnHeader';
     columnHeader.textContent = column;
     statsPageHeader.append(columnHeader);
   }
+  return statsPageHeader;
+};
 
-  const resetButton = button.cloneNode();
-  resetButton.id = 'resetButton';
-  resetButton.textContent = '[ reset ]';
-
-  const repeatDiffButton = button.cloneNode();
-  repeatDiffButton.id = 'repeatDiffButton';
-  repeatDiffButton.textContent = '[ repeat difficult words ]';
-
-  statsPage.append(statsPageTitle, resetButton, repeatDiffButton, statsPageHeader);
+export const createStatsPage = () => {
+  const statsPage = div.cloneNode();
+  statsPage.className = 'statsPage';
+  const statsPageTitle = h1.cloneNode();
+  statsPageTitle.textContent = 'stats';
+  const statsPageHeader = createStatsPageHeader();
+  statsPage.append(statsPageTitle, statsPageHeader);
 
   for (let i = 0; i < categoryList.length; i += 1) {
     const category = categoryList[i];
@@ -125,24 +122,30 @@ export const createStatsPage = () => {
       const wordLine = div.cloneNode();
       wordLine.className = 'wordLine';
       wordLine.id = word;
-      for (let index = 0; index < statsColumns.length; index += 1) {
-        const column = statsColumns[index];
+      for (let index = 0; index < CONSTANTS.COLUMN_HEADINGS.length; index += 1) {
+        const column = CONSTANTS.COLUMN_HEADINGS[index];
         const element = div.cloneNode();
-        if (column === 'word (translation)') {
-          element.className = 'word';
-          element.textContent = `${wordObj.word} (${wordObj.translation})`;
-        } else if (column === 'training clicks') {
-          element.className = 'training';
-          element.textContent = stats[word].trainClickCounter;
-        } else if (column === 'correct clicks') {
-          element.className = 'correct';
-          element.textContent = stats[word].playSuccessCounter;
-        } else if (column === 'wrong clicks') {
-          element.className = 'wrong';
-          element.textContent = stats[word].playFailCounter;
-        } else {
-          element.className = 'rate';
-          element.textContent = stats[word].failPercentage;
+        switch (column) {
+          case 'word (translation)':
+            element.className = 'word';
+            element.textContent = `${wordObj.word} (${wordObj.translation})`;
+            break;
+          case 'training clicks':
+            element.className = 'training';
+            element.textContent = stats[word].trainClickCounter;
+            break;
+          case 'correct clicks':
+            element.className = 'correct';
+            element.textContent = stats[word].playSuccessCounter;
+            break;
+          case 'wrong clicks':
+            element.className = 'wrong';
+            element.textContent = stats[word].playFailCounter;
+            break;
+          default:
+            element.className = 'rate';
+            element.textContent = stats[word].failPercentage;
+            break;
         }
         wordLine.append(element);
       }

@@ -325,6 +325,13 @@ main {
   word-wrap: break-word;
 }
 
+.statsPage .statsPageHeader .buttonsBlock {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  display: flex;
+  justify-content: space-between;
+}
+
 .statsPage .categoryBlock {
   margin-bottom: 48px;
 }

@@ -1,5 +1,6 @@
 import allWords from './allWords.js';
 import * as stats from './stats.js';
+import * as CONSTANTS from '../utils/constants.js';
 
 export const finishGame = (errorCounter) => {
   const main = document.querySelector('main');
@@ -9,25 +10,28 @@ export const finishGame = (errorCounter) => {
   const resultText = document.createElement('h1');
   const resultImage = new Image();
   const resultAudio = new Audio();
-  if (errorCounter === 0) {
-    resultAudio.src = './assets/audio/success.mp3';
-    resultImage.src = './assets/images/party.png';
-    resultText.textContent = 'Congratulations!';
-  } else {
-    resultAudio.src = './assets/audio/failure.mp3';
-    resultImage.src = './assets/images/fire.png';
-    resultText.textContent = `Unfortunately, you have ${errorCounter} errors.`;
+  switch (errorCounter) {
+    case 0:
+      resultAudio.src = './assets/audio/success.mp3';
+      resultImage.src = './assets/images/party.png';
+      break;
+    default:
+      resultAudio.src = './assets/audio/failure.mp3';
+      resultImage.src = './assets/images/fire.png';
+      break;
   }
+  resultText.textContent = CONSTANTS.GAME.GAME_RESULT_TEXT(errorCounter);
   gameResult.append(resultText, resultImage);
   main.append(gameResult);
   resultAudio.play();
   setTimeout(() => {
+    // eslint-disable-next-line no-restricted-globals
     location.reload();
   }, 5000);
 };
 
 const startGame = () => {
-  const category = document.querySelector('.category').id.replace(/-/g, ' ');
+  const category = document.querySelector('.category').id.replace(CONSTANTS.REGEX.DASH, ' ');
   const words = Object.keys(allWords[category].cards);
   const wordsToPlay = words;
   let errorCounter = 0;
@@ -49,7 +53,7 @@ const startGame = () => {
   const ratingBar = document.querySelector('.ratingBar');
   const correct = (card) => {
     const correctSymbol = document.createElement('p');
-    correctSymbol.textContent = '✔️';
+    correctSymbol.textContent = CONSTANTS.GAME.CORRECT_SYMBOL;
     ratingBar.append(correctSymbol.cloneNode(true));
     card.classList.add('inactive');
     correctAudio.play();
@@ -60,7 +64,7 @@ const startGame = () => {
   };
   const error = () => {
     const errorSymbol = document.createElement('p');
-    errorSymbol.textContent = '❌';
+    errorSymbol.textContent = CONSTANTS.GAME.ERROR_SYMBOL;
     ratingBar.append(errorSymbol.cloneNode(true));
     errorCounter += 1;
     errorAudio.play();
@@ -87,7 +91,7 @@ export const initGame = () => {
   const gameButton = document.querySelector('#gameButton');
   if (gameButton.className === 'waiting') {
     gameButton.className = 'active';
-    gameButton.textContent = '[ repeat the word ]';
+    gameButton.textContent = CONSTANTS.GAME.GAME_BUTTON_ACTIVE;
     startGame();
   }
 };

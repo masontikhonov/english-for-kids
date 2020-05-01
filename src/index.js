@@ -2,6 +2,7 @@ import allWords from './js/allWords.js';
 import Category from './js/Category.js';
 import * as stats from './js/stats.js';
 import * as game from './js/game.js';
+import { REGEX } from './utils/constants.js';
 
 const categoryList = Object.keys(allWords);
 let difficultWords;
@@ -39,12 +40,11 @@ const switchMode = () => {
     modeSwitcher.classList.replace('train', 'play');
     main.classList.replace('train', 'play');
     changeModeSwitcher();
+    return;
   }
-  if (modeSwitcher.classList.contains('play')) {
-    modeSwitcher.classList.replace('play', 'train');
-    main.classList.replace('play', 'train');
-    changeModeSwitcher();
-  }
+  modeSwitcher.classList.replace('play', 'train');
+  main.classList.replace('play', 'train');
+  changeModeSwitcher();
 };
 
 const createMainMenu = () => {
@@ -58,7 +58,7 @@ const createMainMenu = () => {
   for (let i = 0; i < categoryList.length; i += 1) {
     const categoryTitle = categoryList[i];
     const item = document.createElement('li');
-    item.classList.add('item', `${categoryTitle.replace(/\s+/g, '-')}`);
+    item.classList.add('item', `${categoryTitle.replace(REGEX.WHITESPACES, '-')}`);
     item.textContent = categoryTitle;
     ul.append(item);
   }
@@ -71,24 +71,25 @@ const createMainMenu = () => {
   return ul;
 };
 
+const createMainPageCard = (category) => {
+  const words = Object.keys(allWords[category].cards);
+  const randomWord = words[Math.floor(Math.random() * words.length)];
+  const cardImage = new Image();
+  cardImage.classList.add('cardImage');
+  cardImage.src = `./assets/images/${randomWord}.png`;
+  cardImage.alt = `${category}`;
+  const cardTitle = document.createElement('p');
+  cardTitle.className = 'cardTitle';
+  cardTitle.textContent = category;
+  const card = document.createElement('div');
+  card.classList.add('card', `${category.replace(REGEX.WHITESPACES, '-')}`);
+  card.append(cardImage, cardTitle);
+  return card;
+};
+
 const createMainPage = () => {
   const mainPageCards = document.createElement('div');
   mainPageCards.className = 'mainPage';
-  const createMainPageCard = (category) => {
-    const words = Object.keys(allWords[category].cards);
-    const randomWord = words[Math.floor(Math.random() * words.length)];
-    const cardImage = new Image();
-    cardImage.classList.add('cardImage');
-    cardImage.src = `./assets/images/${randomWord}.png`;
-    cardImage.alt = `${category}`;
-    const cardTitle = document.createElement('p');
-    cardTitle.className = 'cardTitle';
-    cardTitle.textContent = category;
-    const card = document.createElement('div');
-    card.classList.add('card', `${category.replace(/\s+/g, '-')}`);
-    card.append(cardImage, cardTitle);
-    return card;
-  };
   for (let i = 0; i < categoryList.length; i += 1) {
     const category = categoryList[i];
     mainPageCards.append(createMainPageCard(category));
@@ -117,33 +118,37 @@ const changeMainMenuState = ({ target }) => {
 };
 
 const changePage = (targetPage) => {
-  if (targetPage === 'main page') {
-    main.firstElementChild.remove();
-    main.append(createMainPage());
-  } else if (targetPage === 'stats') {
-    main.firstElementChild.remove();
-    main.append(stats.createStatsPage());
-  } else if (targetPage === 'difficult words') {
-    main.firstElementChild.remove();
-    main.append(difficultWords.createHtml());
-  } else {
-    main.firstElementChild.remove();
-    main.append(allWords[targetPage].createHtml());
+  switch (targetPage) {
+    case 'main page':
+      main.firstElementChild.remove();
+      main.append(createMainPage());
+      break;
+    case 'stats':
+      main.firstElementChild.remove();
+      main.append(stats.createStatsPage());
+      break;
+    case 'difficult words':
+      main.firstElementChild.remove();
+      main.append(difficultWords.createHtml());
+      break;
+    default:
+      main.firstElementChild.remove();
+      main.append(allWords[targetPage].createHtml());
+      break;
   }
 };
 
 const mainClick = (event) => {
-  const etcl = event.target.classList;
   if (main.firstElementChild.classList.contains('mainPage')) {
-    if (etcl.contains('card')) {
+    if (event.target.classList.contains('card')) {
       const target = event.target.querySelector('.cardTitle').textContent;
       changePage(target);
     }
-    if (etcl.contains('cardImage')) {
+    if (event.target.classList.contains('cardImage')) {
       const target = event.target.nextSibling.textContent;
       changePage(target);
     }
-    if (etcl.contains('cardTitle')) {
+    if (event.target.classList.contains('cardTitle')) {
       const target = event.target.textContent;
       changePage(target);
     }
@@ -197,12 +202,15 @@ const easterEgg = (event) => {
   }
 };
 
-changeModeSwitcher();
-mainMenu.append(createMainMenu());
-main.append(createMainPage());
+const init = () => {
+  changeModeSwitcher();
+  mainMenu.append(createMainMenu());
+  main.append(createMainPage());
+  main.addEventListener('click', mainClick);
+  document.querySelector('body').addEventListener('click', changeMainMenuState);
+  mainMenu.addEventListener('click', mainMenuClick);
+  modeSwitcher.addEventListener('click', switchMode);
+  document.addEventListener('keyup', easterEgg);
+};
 
-main.addEventListener('click', mainClick);
-document.querySelector('body').addEventListener('click', changeMainMenuState);
-mainMenu.addEventListener('click', mainMenuClick);
-modeSwitcher.addEventListener('click', switchMode);
-document.addEventListener('keyup', easterEgg);
+init();

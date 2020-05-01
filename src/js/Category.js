@@ -1,4 +1,5 @@
 import Card from './Word.js';
+import * as CONSTANTS from '../utils/constants.js';
 
 export default class Category {
   constructor(title, wordList) {
@@ -21,7 +22,7 @@ export default class Category {
     const button = document.createElement('button');
     button.id = 'gameButton';
     button.className = 'waiting';
-    button.textContent = '[ start game! ]';
+    button.textContent = CONSTANTS.GAME.GAME_BUTTON_WAITING;
     const buttonWrapper = document.createElement('div');
     buttonWrapper.classList.add('button', 'wrapper');
     buttonWrapper.append(button);
@@ -37,7 +38,7 @@ export default class Category {
       categoryHtml.append(this.cards[card].createHtml());
     }
     categoryHtml.className = 'category';
-    categoryHtml.id = this.title.replace(/\s+/g, '-');
+    categoryHtml.id = this.title.replace(CONSTANTS.REGEX.WHITESPACES, '-');
     return categoryHtml;
   }
 }
