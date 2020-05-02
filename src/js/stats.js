@@ -110,48 +110,16 @@ export const createStatsPage = () => {
 
   for (let i = 0; i < categoryList.length; i += 1) {
     const category = categoryList[i];
-    const categoryBlock = div.cloneNode();
-    categoryBlock.className = 'categoryBlock';
-    const categoryTitle = h2.cloneNode();
-    categoryTitle.textContent = category;
-    categoryBlock.append(categoryTitle);
-    const words = Object.keys(allWords[category].cards);
-    for (let s = 0; s < words.length; s += 1) {
-      const word = words[s];
-      const wordObj = allWords[category].cards[word];
-      const wordLine = div.cloneNode();
-      wordLine.className = 'wordLine';
-      wordLine.id = word;
-      for (let index = 0; index < CONSTANTS.COLUMN_HEADINGS.length; index += 1) {
-        const column = CONSTANTS.COLUMN_HEADINGS[index];
-        const element = div.cloneNode();
-        switch (column) {
-          case 'word (translation)':
-            element.className = 'word';
-            element.textContent = `${wordObj.word} (${wordObj.translation})`;
-            break;
-          case 'training clicks':
-            element.className = 'training';
-            element.textContent = stats[word].trainClickCounter;
-            break;
-          case 'correct clicks':
-            element.className = 'correct';
-            element.textContent = stats[word].playSuccessCounter;
-            break;
-          case 'wrong clicks':
-            element.className = 'wrong';
-            element.textContent = stats[word].playFailCounter;
-            break;
-          default:
-            element.className = 'rate';
-            element.textContent = stats[word].failPercentage;
-            break;
-        }
-        wordLine.append(element);
-      }
-      categoryBlock.append(wordLine);
-    }
-    statsPage.append(categoryBlock);
+    statsPage.append(allWords[category].createStatsHtml());
+  }
+
+  const words = Object.keys(stats);
+  for (let i = 0; i < words.length; i += 1) {
+    const word = words[i];
+    statsPage.querySelector(`#${word} > .training`).textContent = stats[word].trainClickCounter;
+    statsPage.querySelector(`#${word} > .correct`).textContent = stats[word].playSuccessCounter;
+    statsPage.querySelector(`#${word} > .wrong`).textContent = stats[word].playFailCounter;
+    statsPage.querySelector(`#${word} > .rate`).textContent = stats[word].failPercentage;
   }
   return statsPage;
 };

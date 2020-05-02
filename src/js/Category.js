@@ -41,4 +41,18 @@ export default class Category {
     categoryHtml.id = this.title.replace(CONSTANTS.REGEX.WHITESPACES, '-');
     return categoryHtml;
   }
+
+  createStatsHtml() {
+    const categoryBlock = document.createElement('div');
+    categoryBlock.className = 'categoryBlock';
+    const categoryTitle = document.createElement('h2');
+    categoryTitle.textContent = this.title;
+    categoryBlock.append(categoryTitle);
+    const words = Object.keys(this.cards);
+    for (let i = 0; i < words.length; i += 1) {
+      const word = words[i];
+      categoryBlock.append(this.cards[word].createStatsHtml());
+    }
+    return categoryBlock;
+  }
 }
