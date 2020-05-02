@@ -154,7 +154,7 @@ const mainClick = (event) => {
     }
   }
   const gameMode = document.querySelector('#modeSwitcher').checked;
-  if (event.target.closest('.category') !== null && !gameMode && event.target.className !== 'flipOn' && event.target.className !== 'flipOut') {
+  if (event.target.closest('.category') !== null && event.target.closest('.card') !== null && !gameMode && event.target.className !== 'flipOn' && event.target.className !== 'flipOut') {
     const word = event.target.closest('.card').id;
     stats.increaseTrainClickCounter(word);
   }
