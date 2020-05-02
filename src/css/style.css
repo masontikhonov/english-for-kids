@@ -1,6 +1,15 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" all;
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
 
+:root {
+  --link-hover-color: blue;
+  --main-menu-bg-color: white;
+  --main-menu-item-hover-bg-color: black;
+  --main-menu-item-hover-color: white;
+  --card-bg-color: white;
+  --tables-even-row-bg-color: rgb(245, 245, 245);
+}
+
 body {
   font-family: 'PT Serif', serif;
 }
@@ -19,7 +28,7 @@ button:focus {
 button:hover {
   cursor: pointer;
   font-style: italic;
-  color: blue;
+  color: var(--link-hover-color);
 }
 
 input#modeSwitcher {
@@ -41,7 +50,7 @@ label.modeSwitcher {
 }
 
 label.modeSwitcher:hover {
-  color: blue;
+  color: var(--link-hover-color);
 }
 
 label.modeSwitcher span {
@@ -71,7 +80,7 @@ nav#mainMenu {
   width: 70%;
   max-width: 300px;
   height: 100vh;
-  background-color: white;
+  background-color: var(--main-menu-bg-color);
   border-right: 3px solid black;
   z-index: 10;
   padding: 0 20px 0 50px;
@@ -102,8 +111,8 @@ nav#mainMenu li:hover {
   cursor: pointer;
   font-style: italic;
   border-bottom: 1px solid white;
-  background-color: black;
-  color: white;
+  background-color: var(--main-menu-item-hover-bg-color);
+  color: var(--main-menu-item-hover-color);
 }
 
 nav#mainMenu li.active {
@@ -182,7 +191,7 @@ main {
   width: 160px;
   height: 200px;
   padding: 20px 20px;
-  background-color: white;
+  background-color: var(--card-bg-color);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   display: flex;
@@ -344,5 +353,5 @@ main {
 }
 
 .statsPage .categoryBlock .wordLine:nth-child(2n+3) {
-  background-color: rgb(245, 245, 245);
+  background-color: var(--tables-even-row-bg-color);
 }
