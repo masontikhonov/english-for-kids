@@ -1,0 +1,357 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" all;
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --link-hover-color: blue;
+  --main-menu-bg-color: white;
+  --main-menu-item-hover-bg-color: black;
+  --main-menu-item-hover-color: white;
+  --card-bg-color: white;
+  --tables-even-row-bg-color: rgb(245, 245, 245);
+}
+
+body {
+  font-family: 'PT Serif', serif;
+}
+
+button,
+button:focus {
+  border: none;
+  background: none;
+  outline: none;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'PT Serif', serif;
+  transition: all 0.6s ease-out;
+}
+
+button:hover {
+  cursor: pointer;
+  font-style: italic;
+  color: var(--link-hover-color);
+}
+
+input#modeSwitcher {
+  display: none;
+}
+
+label.modeSwitcher {
+  position: absolute;
+  top: 24px;
+  right: 50px;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.6s;
+}
+
+label.modeSwitcher:hover {
+  color: var(--link-hover-color);
+}
+
+label.modeSwitcher span {
+  white-space: pre;
+}
+
+label.modeSwitcher span.play,
+label.modeSwitcher span.train {
+  position: absolute;
+  transition: transform 0.6s;
+}
+
+button#mainMenuButton {
+  position: absolute;
+  top: 24px;
+  left: 50px;
+  height: 24px;
+  z-index: 20;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+nav#mainMenu {
+  position: absolute;
+  top: 0;
+  width: 70%;
+  max-width: 300px;
+  height: 100vh;
+  background-color: var(--main-menu-bg-color);
+  border-right: 3px solid black;
+  z-index: 10;
+  padding: 0 20px 0 50px;
+}
+
+nav#mainMenu.hidden {
+  transform: translateX(-373px);
+  transition: transform 0.6s;
+}
+
+nav#mainMenu.active {
+  transform: translateX(0px);
+  transition: transform 0.6s;
+}
+
+nav#mainMenu ul:first-child {
+  margin-top: 70px;
+}
+
+nav#mainMenu li {
+  width: 100%;
+  height: 40px;
+  font-size: 40px;
+  border-bottom: 1px solid white;
+}
+
+nav#mainMenu li:hover {
+  cursor: pointer;
+  font-style: italic;
+  border-bottom: 1px solid white;
+  background-color: var(--main-menu-item-hover-bg-color);
+  color: var(--main-menu-item-hover-color);
+}
+
+nav#mainMenu li.active {
+  font-style: italic;
+  border-bottom: 1px solid black;
+}
+
+main {
+  width: 100%;
+  margin: 20px 0;
+  transition: all 0.6s;
+}
+
+.category,
+.mainPage,
+.statsPage,
+.gameResult {
+  max-width: 666px;
+  margin: 90px auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.category h1 {
+  width: 100%;
+  margin: 0 0 50px;
+  font-size: 48px;
+  text-align: center;
+}
+
+.mainPage .card {
+  width: 160px;
+  height: 200px;
+  margin: 10px 10px;
+  padding: 20px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+}
+
+.mainPage .card:hover {
+  box-shadow: 3px 3px 5px gray;
+  transition: all 0.1s;
+}
+
+.category .card {
+  width: 200px;
+  height: 240px;
+  margin: 10px 10px;
+  perspective: 1000px;
+}
+
+.card:hover {
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.category .card:hover .front, .card:hover .back {
+  box-shadow: 3px 3px 5px gray;
+  transition: all 0.1s;
+}
+
+.category .card > .inner {
+  position: relative;
+  width: 200px;
+  height: 240px;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.category .card .front,
+.category .card .back {
+  position: absolute;
+  width: 160px;
+  height: 200px;
+  padding: 20px 20px;
+  background-color: var(--card-bg-color);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+}
+
+.category .card .back {
+  transform: rotateY(180deg);
+}
+
+.category .card.flipped .inner {
+  transform: rotateY(180deg);
+}
+
+.card p {
+  line-height: 20px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.category .card .flipOn,
+.category .card .flipOut {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  padding: 5px 5px;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  opacity: 0.2;
+}
+
+.category .card .flipOn:hover,
+.category .card .flipOut:hover {
+  padding: 0 0;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  opacity: 1;
+  transition: all 0.1s;
+}
+
+.play .category .card,
+.play .category .card .inner {
+  height: 200px;
+}
+
+.play .category .card .front {
+  height: 160px;
+}
+
+.play .category .card .front p,
+.play .category .card .front span,
+.play .category .card .back,
+.train .category .button.wrapper,
+.train .category .ratingBar {
+  display: none;
+}
+
+.play .category .button.wrapper,
+.play .category .ratingBar {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.play .category .ratingBar {
+  justify-content: flex-end;
+  height: 24px;
+  overflow: hidden;
+}
+
+.play .category button#gameButton {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.play .category .ratingBar p {
+  font-size: 24px;
+}
+
+.play .category .card.inactive {
+  opacity: 0.3;
+}
+
+.play .category .card.inactive:hover .front {
+  box-shadow: none;
+}
+
+.gameResult {
+  align-items: flex-start;
+}
+
+.gameResult h1 {
+  width: 100%;
+  margin: 0 0 50px;
+  font-size: 36px;
+  text-align: center;
+}
+
+.statsPage {
+  padding: 0 24px;
+}
+
+.statsPage .statsPageHeader,
+.statsPage .categoryBlock,
+.statsPage .categoryBlock h2,
+.statsPage .categoryBlock .wordLine {
+  width: 100%;
+}
+
+.statsPage h1 {
+  width: 100%;
+  margin: 0 0 50px;
+  font-size: 48px;
+  text-align: center;
+}
+
+.statsPage button#resetButton,
+.statsPage button#repeatDiffButton {
+  margin: 12px 12px;
+  font-size: 22px;
+  line-height: 22px;
+}
+
+.statsPage .statsPageHeader,
+.statsPage .categoryBlock .wordLine {
+  display: grid;
+  grid-template-columns: 5fr repeat(4, 1fr);
+  column-gap: 6px;
+  padding: 4px 4px;
+  font-size: 10px;
+  word-wrap: break-word;
+}
+
+.statsPage .statsPageHeader .buttonsBlock {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  display: flex;
+  justify-content: space-between;
+}
+
+.statsPage .categoryBlock {
+  margin-bottom: 48px;
+}
+
+.statsPage .categoryBlock h2 {
+  font-size: 32px;
+  margin-bottom: 32px;
+}
+
+.statsPage .categoryBlock .wordLine {
+  margin-bottom: 6px;
+  height: auto;
+  font-size: 18px;
+}
+
+.statsPage .categoryBlock .wordLine:nth-child(2n+3) {
+  background-color: var(--tables-even-row-bg-color);
+}

@@ -1,0 +1,80 @@
+{
+  "name": "english-for-kids",
+  "version": "1.0.0-alpha-1",
+  "description": "RSSchool Stage#2 task (https://github.com/rolling-scopes-school/tasks/blob/master/tasks/rslang/english-for-kids.md)",
+  "main": "src/js/index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint",
+    "build": "webpack --progress -p",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masontikhonov/english-for-kids.git"
+  },
+  "author": "Zhenya Tikhonov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masontikhonov/english-for-kids/issues"
+  },
+  "homepage": "https://github.com/masontikhonov/english-for-kids#readme",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": "> 0.25%, not dead"
+        }
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true
+    },
+    "extends": [
+      "airbnb-base"
+    ],
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "impliedStrict": true
+      }
+    },
+    "rules": {
+      "import/extensions": [
+        "error",
+        "never",
+        {
+          "js": "always",
+          "json": "always"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
